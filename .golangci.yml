@@ -1,0 +1,11 @@
+version: "2"
+
+linters:
+  enable:
+    - logcheck
+
+linters-settings:
+  custom:
+    logcheck:
+      path: "./logcheck.so" 
+      description: "Log message style checker: lowercase, English, no emojis, no sensitive data"
