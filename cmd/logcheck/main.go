@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/higurashi09473/logcheck/pkg/analyzer"
+	"github.com/Higurashi09473/logcheck"
 	"golang.org/x/tools/go/analysis/singlechecker"
 )
 

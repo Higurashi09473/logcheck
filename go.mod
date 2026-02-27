@@ -1,4 +1,4 @@
-module github.com/higurashi09473/logcheck
+module github.com/Higurashi09473/logcheck
 
 go 1.24.0
 

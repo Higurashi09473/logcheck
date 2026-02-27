@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/higurashi09473/logcheck/utils"
+	"github.com/Higurashi09473/logcheck/utils"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/passes/inspect"
 )
