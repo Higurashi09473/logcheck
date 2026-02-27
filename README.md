@@ -27,3 +27,11 @@ logcheck ./...
 # или
 go vet -vettool=$(which logcheck) ./...
 ```
+
+## Сборка бинарника
+
+```bash
+go build -o logcheck ./cmd/logcheck
+
+./logcheck ./...
+```
