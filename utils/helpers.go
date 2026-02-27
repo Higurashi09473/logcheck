@@ -74,10 +74,12 @@ func IsExtendedLatinLetter(r rune) bool {
 	return unicode.In(r, unicode.Latin)
 }
 
-func IsEmoji(r rune) bool {
-	return (r >= 0x1F600 && r <= 0x1F64F) ||
-		(r >= 0x1F300 && r <= 0x1F5FF) ||
-		(r >= 0x1F680 && r <= 0x1F6FF)
+func IsNonEnglishLetter(r rune) bool {
+    if !unicode.IsLetter(r) {
+        return false // не буква → ок (цифры, пробелы, пунктуация, эмодзи — пропускаем)
+    }
+    // Проверяем только ASCII латинские буквы
+    return !((r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z'))
 }
 
 func IsForbiddenPunctuation(r rune) bool {

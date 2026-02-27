@@ -132,7 +132,7 @@ func checkSpecialChars(pass *analysis.Pass, call *ast.CallExpr) {
 
 	var offending []rune 
 	for _, r := range message {
-		if utils.IsEmoji(r) {
+		if utils.IsNonEnglishLetter(r) {
 			offending = append(offending, r)
 		} else if utils.IsForbiddenPunctuation(r) {
 			offending = append(offending, r)
