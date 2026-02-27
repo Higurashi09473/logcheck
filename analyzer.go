@@ -13,8 +13,9 @@ import (
 )
 
 var Analyzer = &analysis.Analyzer{
-	Name:     "loglinter",
+	Name:     "logcheck",
 	Doc:      "checks log messages for compliance with rules",
+	URL:      "https://github.com/Higurashi09473/logcheck",
 	Run:      run,
 	Requires: []*analysis.Analyzer{inspect.Analyzer},
 }
