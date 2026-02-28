@@ -40,8 +40,8 @@ func TestIsAsciiLatinLetter(t *testing.T) {
 	assert.True(t, IsAsciiLatinLetter('k'))
 	assert.False(t, IsAsciiLatinLetter('1'))
 	assert.False(t, IsAsciiLatinLetter(' '))
-	assert.False(t, IsAsciiLatinLetter('é'))     // не ascii
-	assert.False(t, IsAsciiLatinLetter('ї'))     // кириллица
+	assert.False(t, IsAsciiLatinLetter('é')) // не ascii
+	assert.False(t, IsAsciiLatinLetter('ї')) // кириллица
 	assert.False(t, IsAsciiLatinLetter('😀'))
 }
 
@@ -62,7 +62,7 @@ func TestIsForbiddenPunctuation(t *testing.T) {
 		assert.False(t, IsForbiddenPunctuation(r), "should be allowed: %q", r)
 	}
 
-	forbidden := []rune{'@', '#', '%', '&', '*','/', '\\', '[', ']', '{', '}', '_'}
+	forbidden := []rune{'@', '#', '%', '&', '*', '/', '\\', '[', ']', '{', '}', '_'}
 	for _, r := range forbidden {
 		assert.True(t, IsForbiddenPunctuation(r), "should be forbidden: %q", r)
 	}

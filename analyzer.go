@@ -27,7 +27,10 @@ func run(pass *analysis.Pass) (interface{}, error) {
 	flagMap := config.FlagsToMap(&pass.Analyzer.Flags)
 
 	var cfg config.Options
-	mapstructure.Decode(flagMap, &cfg)
+	err := mapstructure.Decode(flagMap, &cfg)
+	if err != nil {
+		return  nil, err
+	}
 
 	for _, file := range pass.Files {
 		ast.Inspect(file, func(n ast.Node) bool {
