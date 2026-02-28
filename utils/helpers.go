@@ -86,7 +86,7 @@ func IsForbiddenPunctuation(r rune) bool {
 	if !unicode.IsPunct(r) {
 		return false
 	}
-	allowed := ".,?!:;\"'()-"
+	allowed := ".,?!:;\"'()-i "
 	return unicode.IsPunct(r) && !strings.ContainsRune(allowed, r)
 }
 
