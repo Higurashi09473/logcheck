@@ -15,10 +15,6 @@ func main() {
 
 	sugar := logger.Sugar() // SugaredLogger — самый популярный вариант
 
-	// ────────────────────────────────────────────────
-	// Классический log (как в предыдущем тесте)
-	// ────────────────────────────────────────────────
-
 	// 1. Uppercase в начале
 	log.Printf("User logged in successfully")
 
@@ -30,10 +26,6 @@ func main() {
 
 	// 4. Sensitive данные
 	sugar.Error("Failed to authenticate user with password: secret123")
-
-	// ────────────────────────────────────────────────
-	// zap.SugaredLogger — printf-стиль (самый частый случай)
-	// ────────────────────────────────────────────────
 
 	// 5. Uppercase + русский
 	sugar.Infof("Добро пожаловать в приложение!")
@@ -53,10 +45,6 @@ func main() {
 	// 9. w-вариант (structured) с потенциально плохими данными
 	sugar.Warnw("Config loaded", "api_key", "sk_live_abc123...")
 
-	// ────────────────────────────────────────────────
-	// zap.Logger (несахаренный, structured) — реже, но тоже бывает
-	// ────────────────────────────────────────────────
-
 	// 10. Uppercase начало
 	logger.Info("User session started successfully")
 
@@ -71,12 +59,7 @@ func main() {
 	// 13. Нормальный
 	logger.Debug("Health check OK", zap.Int("status", 200))
 
-	// ────────────────────────────────────────────────
-	// Другие варианты (не должны ругаться)
-	// ────────────────────────────────────────────────
-
 	fmt.Println("Это не лог → игнорировать")
-	// log.Printf(123)                    // не строка
-	sugar.Infow("ok", "field", 42)                           // нормальный structured
-	logger.Fatal("Critical!", zap.Error(fmt.Errorf("boom"))) // но fatal — может быть без строки
+	sugar.Infow("ok", "field", 42)                           
+	logger.Fatal("Critical!", zap.Error(fmt.Errorf("boom"))) 
 }

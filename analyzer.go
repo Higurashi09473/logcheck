@@ -1,7 +1,6 @@
 package analyzer
 
 import (
-	"fmt"
 	"go/ast"
 	"go/token"
 	"strconv"
@@ -28,10 +27,8 @@ func run(pass *analysis.Pass) (interface{}, error) {
 	flagMap := config.FlagsToMap(&pass.Analyzer.Flags)
 
 	var cfg config.Options
-	if err := mapstructure.Decode(flagMap, &cfg); err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(cfg.EnglishOnly)
+	mapstructure.Decode(flagMap, &cfg)
+
 	for _, file := range pass.Files {
 		ast.Inspect(file, func(n ast.Node) bool {
 			call, ok := n.(*ast.CallExpr)

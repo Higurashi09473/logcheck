@@ -7,11 +7,6 @@ import (
 )
 
 var logMethods = map[string]struct{}{
-	// std log
-	"Print":   {},
-	"Println": {},
-	"Printf":  {},
-
 	// slog.Logger methods
 	"Debug":        {},
 	"DebugContext": {},
@@ -59,7 +54,7 @@ func IsLogMethod(methodName string) bool {
 		return true
 	}
 
-	if strings.ToLower(methodName) == "log" || strings.HasSuffix(strings.ToLower(methodName), "log") {
+	if strings.ToLower(methodName) == "log" {
 		return true
 	}
 
@@ -70,12 +65,8 @@ func IsAsciiLatinLetter(r rune) bool {
 	return (r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z')
 }
 
-func IsExtendedLatinLetter(r rune) bool {
-	return unicode.In(r, unicode.Latin)
-}
-
 func IsEmoji(r rune) bool {
-	return(r >= 0x1F300 && r <= 0x1F5FF) || // 1F300–1F5FF  — Miscellaneous Symbols and Pictographs
+	return (r >= 0x1F300 && r <= 0x1F5FF) || // 1F300–1F5FF  — Miscellaneous Symbols and Pictographs
 		(r >= 0x1F600 && r <= 0x1F64F) || // 1F600–1F64F  — Emoticons (основные смайлики)
 		(r >= 0x1F680 && r <= 0x1F6FF) || // 1F680–1F6FF  — Transport and Map Symbols
 		(r >= 0x1F900 && r <= 0x1F9FF) || // 1F900–1F9FF  — Supplemental Symbols and Pictographs
@@ -86,7 +77,7 @@ func IsForbiddenPunctuation(r rune) bool {
 	if !unicode.IsPunct(r) {
 		return false
 	}
-	allowed := ".,?!:;\"'()-i "
+	allowed := ".,?!:;\"'()- "
 	return unicode.IsPunct(r) && !strings.ContainsRune(allowed, r)
 }
 
