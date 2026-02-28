@@ -139,18 +139,9 @@ func checkEnglishLanguage(pass *analysis.Pass, call *ast.CallExpr) {
 	}
 
 	// Используем хелпер
-	if !isEnglish(message) {
+	if !utils.IsEnglish(message) {
 		pass.Reportf(lit.Pos(), "log message must be in English only (ASCII letters)")
 	}
-}
-
-func isEnglish(s string) bool {
-	for _, r := range s {
-		if unicode.IsLetter(r) && !utils.IsAsciiLatinLetter(r) {
-			return false
-		}
-	}
-	return true
 }
 
 func checkSpecialChars(pass *analysis.Pass, call *ast.CallExpr) {

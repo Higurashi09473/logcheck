@@ -61,6 +61,15 @@ func IsLogMethod(methodName string) bool {
 	return false
 }
 
+func IsEnglish(s string) bool {
+	for _, r := range s {
+		if unicode.IsLetter(r) && !IsAsciiLatinLetter(r) {
+			return false
+		}
+	}
+	return true
+}
+
 func IsAsciiLatinLetter(r rune) bool {
 	return (r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z')
 }
