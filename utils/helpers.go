@@ -75,11 +75,11 @@ func IsExtendedLatinLetter(r rune) bool {
 }
 
 func IsNonEnglishLetter(r rune) bool {
-    if !unicode.IsLetter(r) {
-        return false // не буква → ок (цифры, пробелы, пунктуация, эмодзи — пропускаем)
-    }
-    // Проверяем только ASCII латинские буквы
-    return !((r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z'))
+	if !unicode.IsLetter(r) {
+		return false // не буква → ок (цифры, пробелы, пунктуация, эмодзи — пропускаем)
+	}
+	// Проверяем только ASCII латинские буквы
+	return r < 'A' || (r > 'Z' && r < 'a') || r > 'z'
 }
 
 func IsForbiddenPunctuation(r rune) bool {

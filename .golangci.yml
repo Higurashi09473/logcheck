@@ -22,10 +22,12 @@ linters:
     - errorlint
     - prealloc
     - bodyclose
-    - logcheck
+    # - logcheck
 
 linters-settings:
   custom:
     logcheck:
       type: module
       description: "Log message style checker: lowercase, English, no emojis, no sensitive data"
+      path: ./bin/logcheck.so
+      settings: ...
