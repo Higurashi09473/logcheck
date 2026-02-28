@@ -1,6 +1,7 @@
 package analyzer
 
 import (
+	"fmt"
 	"go/ast"
 	"go/token"
 	"strconv"
@@ -68,9 +69,34 @@ func checkStartRune(pass *analysis.Pass, call *ast.CallExpr) {
 
 	firstRune := []rune(message)[0]
 
-	if unicode.IsUpper(firstRune) {
-		pass.Reportf(lit.Pos(), "log message should not start with uppercase letter: %q", message)
+	if !unicode.IsUpper(firstRune) {
+		return
 	}
+
+	startPos := lit.Pos() + token.Pos(1) // +1 для "
+	firstRuneLen := len(string(firstRune)) // длина руны в байтах (для UTF-8)
+
+	// Фикс: заменить первую руну на lowercase
+	lowerRune := unicode.ToLower(firstRune)
+	newFirst := []byte(string(lowerRune))
+
+	pass.Report(analysis.Diagnostic{
+		Pos:     lit.Pos(),
+		End:     lit.End(),
+		Message: fmt.Sprintf("log message should not start with uppercase letter: %q", message),
+		SuggestedFixes: []analysis.SuggestedFix{
+			{
+				Message: "Make first letter lowercase",
+				TextEdits: []analysis.TextEdit{
+					{
+						Pos:     startPos,
+						End:     startPos + token.Pos(firstRuneLen),
+						NewText: newFirst,
+					},
+				},
+			},
+		},
+	})
 }
 
 func checkEnglishLanguage(pass *analysis.Pass, call *ast.CallExpr) {
