@@ -140,7 +140,7 @@ func checkEnglishLanguage(pass *analysis.Pass, call *ast.CallExpr) {
 
 	// Используем хелпер
 	if !utils.IsEnglish(message) {
-		pass.Reportf(lit.Pos(), "log message must be in English only (ASCII letters)")
+		pass.Reportf(lit.Pos(), "log message must be in English only")
 	}
 }
 
@@ -201,7 +201,7 @@ func checkSensitiveData(pass *analysis.Pass, call *ast.CallExpr) {
 		}
 
 		if utils.ContainsSensitiveData(message) {
-			pass.Reportf(lit.Pos(), "potential sensitive data in log message (e.g., passwords, tokens)")
+			pass.Reportf(lit.Pos(), "potential sensitive data in log message")
 		}
 	}
 }

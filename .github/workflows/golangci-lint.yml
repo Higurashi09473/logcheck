@@ -6,6 +6,22 @@ on:
     branches: [ main ]
 
 jobs:
+  analysistest:
+    name: Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+
+      - name: Run analysistest suites
+        run: go test -v -race -timeout 5m ./...
+
   vet:
     name: Go Vet
     runs-on: ubuntu-latest
