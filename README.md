@@ -17,7 +17,6 @@
 
 ## Поддерживаемые логгеры
 
-- `log.Printf`, `log.Print`, `log.Println` (классический `log`)
 - `log/slog` (`slog.Info`, `slog.Warn`, `slog.Error` и т.д.)
 - `go.uber.org/zap` (`Logger`, `SugaredLogger`)
 
