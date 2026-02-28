@@ -7,6 +7,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/Higurashi09473/logcheck/config"
 	"github.com/Higurashi09473/logcheck/utils"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/passes/inspect"
@@ -16,11 +17,13 @@ var Analyzer = &analysis.Analyzer{
 	Name:     "logcheck",
 	Doc:      "checks log messages for compliance with rules",
 	URL:      "https://github.com/Higurashi09473/logcheck",
+	Flags:    config.NewFlagSet(),
 	Run:      run,
 	Requires: []*analysis.Analyzer{inspect.Analyzer},
 }
 
 func run(pass *analysis.Pass) (interface{}, error) {
+	cfg := config.OptionsFromFlags(&pass.Analyzer.Flags)
 	for _, file := range pass.Files {
 		ast.Inspect(file, func(n ast.Node) bool {
 			call, ok := n.(*ast.CallExpr)
@@ -32,10 +35,18 @@ func run(pass *analysis.Pass) (interface{}, error) {
 				methodName := sel.Sel.Name
 
 				if utils.IsLogMethod(methodName) {
-					checkStartRune(pass, call)
-					checkEnglishLanguage(pass, call)
-					checkSpecialChars(pass, call)
-					checkSensitiveData(pass, call)
+					if cfg.Lowercase {
+						checkStartRune(pass, call)
+					}
+					if cfg.EnglishOnly {
+						checkEnglishLanguage(pass, call)
+					}
+					if cfg.NoSpecialChars {
+						checkSpecialChars(pass, call)
+					}
+					if cfg.NoSensitiveData {
+						checkSensitiveData(pass, call)
+					}
 				}
 			}
 
