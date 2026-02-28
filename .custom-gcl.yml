@@ -1,0 +1,6 @@
+version: v2.0
+
+plugins:
+  - module: github.com/Higurashi09473/logcheck
+    import: github.com/Higurashi09473/logcheck  
+    version: latest  

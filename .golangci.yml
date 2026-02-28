@@ -1,11 +1,31 @@
 version: "2"
 
+run:
+  timeout: 5m
+  issues-exit-code: 1
+
 linters:
+  disable-all: true
   enable:
+    - copyloopvar
+    - goconst
+    - gocyclo
+    - misspell
+    - unconvert
+    - unparam
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - whitespace
+    - errorlint
+    - prealloc
+    - bodyclose
     - logcheck
 
 linters-settings:
   custom:
     logcheck:
-      path: "./logcheck.so" 
+      type: module
       description: "Log message style checker: lowercase, English, no emojis, no sensitive data"
