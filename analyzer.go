@@ -1,6 +1,7 @@
 package analyzer
 
 import (
+	"fmt"
 	"go/ast"
 	"go/token"
 	"strconv"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/Higurashi09473/logcheck/config"
 	"github.com/Higurashi09473/logcheck/utils"
+	"github.com/mitchellh/mapstructure"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/passes/inspect"
 )
@@ -23,7 +25,13 @@ var Analyzer = &analysis.Analyzer{
 }
 
 func run(pass *analysis.Pass) (interface{}, error) {
-	cfg := config.OptionsFromFlags(&pass.Analyzer.Flags)
+	flagMap := config.FlagsToMap(&pass.Analyzer.Flags)
+
+	var cfg config.Options
+	if err := mapstructure.Decode(flagMap, &cfg); err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(cfg.EnglishOnly)
 	for _, file := range pass.Files {
 		ast.Inspect(file, func(n ast.Node) bool {
 			call, ok := n.(*ast.CallExpr)
