@@ -57,7 +57,7 @@ func TestIsEmoji(t *testing.T) {
 }
 
 func TestIsForbiddenPunctuation(t *testing.T) {
-	allowed := ".,?!:;\"'()- "
+	allowed := ",:;\"'()- "
 	for _, r := range allowed {
 		assert.False(t, IsForbiddenPunctuation(r), "should be allowed: %q", r)
 	}
