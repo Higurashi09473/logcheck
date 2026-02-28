@@ -1,7 +1,6 @@
 package analyzer
 
 import (
-	"fmt"
 	"go/ast"
 	"go/token"
 	"strconv"
@@ -73,7 +72,7 @@ func checkStartRune(pass *analysis.Pass, call *ast.CallExpr) {
 		return
 	}
 
-	startPos := lit.Pos() + token.Pos(1) // +1 для "
+	startPos := lit.Pos() + token.Pos(1)   // +1 для "
 	firstRuneLen := len(string(firstRune)) // длина руны в байтах (для UTF-8)
 
 	// Фикс: заменить первую руну на lowercase
@@ -83,7 +82,7 @@ func checkStartRune(pass *analysis.Pass, call *ast.CallExpr) {
 	pass.Report(analysis.Diagnostic{
 		Pos:     lit.Pos(),
 		End:     lit.End(),
-		Message: fmt.Sprintf("log message should not start with uppercase letter: %q", message),
+		Message: "log message should not start with uppercase letter",
 		SuggestedFixes: []analysis.SuggestedFix{
 			{
 				Message: "Make first letter lowercase",
@@ -122,10 +121,9 @@ func checkEnglishLanguage(pass *analysis.Pass, call *ast.CallExpr) {
 
 	// Используем хелпер
 	if !isEnglish(message) {
-		pass.Reportf(lit.Pos(), "log message must be in English only (ASCII letters): %q", message)
+		pass.Reportf(lit.Pos(), "log message must be in English only (ASCII letters)")
 	}
 }
-
 
 func isEnglish(s string) bool {
 	for _, r := range s {
@@ -156,9 +154,9 @@ func checkSpecialChars(pass *analysis.Pass, call *ast.CallExpr) {
 		return
 	}
 
-	var offending []rune 
+	var offending []rune
 	for _, r := range message {
-		if utils.IsNonEnglishLetter(r) {
+		if utils.IsEmoji(r) {
 			offending = append(offending, r)
 		} else if utils.IsForbiddenPunctuation(r) {
 			offending = append(offending, r)
@@ -166,7 +164,7 @@ func checkSpecialChars(pass *analysis.Pass, call *ast.CallExpr) {
 	}
 
 	if len(offending) > 0 {
-		pass.Reportf(lit.Pos(), "log message must not contain special characters (found: %q): %q", string(offending), message)
+		pass.Reportf(lit.Pos(), "log message must not contain special characters (found: %q)", string(offending))
 	}
 }
 
@@ -193,7 +191,7 @@ func checkSensitiveData(pass *analysis.Pass, call *ast.CallExpr) {
 		}
 
 		if utils.ContainsSensitiveData(message) {
-			pass.Reportf(lit.Pos(), "potential sensitive data in log message (e.g., passwords, tokens): %q", message)
+			pass.Reportf(lit.Pos(), "potential sensitive data in log message (e.g., passwords, tokens)")
 		}
 	}
 }
